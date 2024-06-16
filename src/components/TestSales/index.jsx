@@ -15,13 +15,30 @@ function Testsales() {
 
   const testSales = async () => {
     if (items.length > 0) {
-      const randomIndex = Math.floor(Math.random() * items.length);
-      const randomItem = items[randomIndex];
-      await simulateSale(randomItem.id);
+      let randomIndex = Math.floor(Math.random() * items.length);
+      let randomItem = items[randomIndex];
+
+      if (randomItem.stock <= 0) {
+        randomItem = items.find((item) => item.stock > 0);
+        if (!randomItem) {
+          showToast("error", "No items with available stock please re stock.");
+          return;
+        }
+      }
+
+      const maxQuantity = Math.min(randomItem.stock, 10);
+      const soldQuantity = Math.floor(Math.random() * maxQuantity) + 1;
+
+      const newSoldCount = randomItem.sold + soldQuantity;
+      const newStockCount = randomItem.stock - soldQuantity;
+
+      await simulateSale(randomItem.id, newSoldCount, newStockCount);
       showToast(
         "success",
-        `Sold: ${randomItem.name} - Quantity: ${randomItem.sold + 1}`
+        `Sold: ${randomItem.name} - Quantity: ${soldQuantity}`
       );
+    } else {
+      showToast("error", "No items available for sale.");
     }
   };
 

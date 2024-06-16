@@ -27,22 +27,25 @@ export const SalesProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const simulateSale = async (itemId) => {
+  const simulateSale = async (itemId, newSoldCount, newStockCount) => {
     const itemRef = doc(Data, "items", itemId);
     const currentItem = items.find((item) => item.id === itemId);
-    const newSoldCount = (currentItem.sold || 0) + 1;
+    if (!currentItem) {
+      console.error("Item not found");
+      return;
+    }
     const saleDate = new Date().toISOString().split("T")[0];
-
     await updateDoc(itemRef, {
       sold: newSoldCount,
+      stock: newStockCount,
     });
-
     setItems((items) =>
       items.map((item) =>
-        item.id === itemId ? { ...item, sold: newSoldCount } : item
+        item.id === itemId
+          ? { ...item, sold: newSoldCount, stock: newStockCount }
+          : item
       )
     );
-
     setSalesHistory((history) => [
       ...history,
       { itemId, date: saleDate, revenue: currentItem.price },
