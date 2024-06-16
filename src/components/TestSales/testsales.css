@@ -1,0 +1,61 @@
+.bubble-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.bubble {
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #3f51b5;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details {
+  position: absolute;
+  width: 300px;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: 10px;
+  z-index: 10;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.action-button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-button.test {
+  background-color: #4caf50; /* Green for testing */
+  color: white;
+}
+
+.action-button.reset {
+  background-color: #f44336; /* Red for resetting */
+  color: white;
+}
+
+.action-button:hover {
+  opacity: 0.8;
+}
